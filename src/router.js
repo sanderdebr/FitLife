@@ -28,13 +28,13 @@ function Router() {
 }
 
 function RouteWrapper({ page: Page, layout: Layout, privateRoute, ...rest }) {
-  const { currentUser } = useAuth();
+  const { user } = useAuth();
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        privateRoute && !currentUser ? (
+        privateRoute && !user ? (
           <Redirect to="/sign-in" />
         ) : (
           <Layout {...props}>

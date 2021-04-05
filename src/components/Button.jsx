@@ -1,6 +1,13 @@
 import React from "react";
 
-function Button({ variant = "primary", value, type, action, loading }) {
+function Button({
+  value,
+  type,
+  action,
+  loading = false,
+  fullWidth,
+  variant = "primary",
+}) {
   let variantClass = "";
 
   switch (variant) {
@@ -16,7 +23,7 @@ function Button({ variant = "primary", value, type, action, loading }) {
   return (
     <button
       type={type}
-      className={`${variantClass} p-3 w-full`}
+      className={`${variantClass} ${fullWidth && "w-full"} p-3`}
       onClick={action}
     >
       {loading ? "Loading.." : value}

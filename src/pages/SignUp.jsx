@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import Input from "../components/Input";
 import { useAuth } from "../contexts/AuthContext";
 
 function SignUp() {
-  const { login } = useAuth();
+  const { signUp } = useAuth();
+  const history = useHistory();
 
   const initialValues = { email: "", password: "" };
 
@@ -19,27 +20,25 @@ function SignUp() {
     setValues({ ...values, [name]: value });
   };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    const { email, password } = values;
+    if (!email || !password) {
+      return setError("Please fill in all fields");
+    }
 
     try {
-      const { email, password } = values;
-      if (!email || !password) {
-        throw Error("Please fill in all fields");
-      }
+      setLoading(true);
+      await signUp(email, password);
 
-      await login(email, password);
-      alert("success");
-
-      setValues(initialValues);
-      setError(null);
+      history.push("/");
     } catch (error) {
       setError(error.message);
     }
 
     setLoading(false);
-  }
+  };
 
   return (
     <main className="lg:max-w-xl lg:p-0 lg:space-y-14 p-6 w-full bg-white space-y-6">
@@ -61,10 +60,11 @@ function SignUp() {
         />
         {error && <div className="text-red-600">{error}</div>}
         <Button
-          value="Sign Un"
+          value="Sign Up"
           type="submit"
           action={handleSubmit}
           loading={loading}
+          fullWidth
         />
       </form>
       <Divider text="or" />

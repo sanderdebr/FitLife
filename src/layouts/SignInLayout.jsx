@@ -7,7 +7,7 @@ function SignInLayout({ children }) {
       <section className="lg:w-2/4 lg:p-12 lg:p-6 p-20 bg-signin-image bg-cover bg-center">
         <Logo />
       </section>
-      <section className="lg:w-2/4 lg:mt-44 flex justify-center">
+      <section className="lg:w-2/4 flex items-center justify-center">
         {children}
       </section>
     </div>

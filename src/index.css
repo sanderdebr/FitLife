@@ -16,10 +16,6 @@
     @apply font-semibold text-primary;
   }
 
-  h1 {
-    @apply text-5xl;
-  }
-
   p,
   label,
   input {

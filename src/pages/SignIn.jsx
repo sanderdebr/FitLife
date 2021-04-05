@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import Input from "../components/Input";
 import { useAuth } from "../contexts/AuthContext";
 
 function SignIn() {
-  const { login } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
+  const history = useHistory();
 
   const initialValues = { email: "", password: "" };
 
   const [values, setValues] = useState(initialValues);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
@@ -19,31 +21,40 @@ function SignIn() {
     setValues({ ...values, [name]: value });
   };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    const { email, password } = values;
+    if (!email || !password) {
+      return setError("Please fill in all fields");
+    }
 
     try {
-      const { email, password } = values;
-      if (!email || !password) {
-        throw Error("Please fill in all fields");
-      }
-
-      await login(email, password);
-      alert("success");
-
-      setValues(initialValues);
-      setError(null);
+      setLoading(true);
+      await signIn(email, password);
+      history.push("/");
     } catch (error) {
       setError(error.message);
     }
 
     setLoading(false);
-  }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setGoogleLoading(true);
+      await signInWithGoogle();
+      history.push("/");
+    } catch (error) {
+      setError(error.message);
+    }
+
+    setGoogleLoading(false);
+  };
 
   return (
     <main className="lg:max-w-xl lg:p-0 lg:space-y-14 p-6 w-full bg-white space-y-6">
-      <h1>Sign In</h1>
+      <h1 className="text-5xl">Sign In</h1>
       <form className="space-y-6">
         <Input
           name="email"
@@ -69,10 +80,12 @@ function SignIn() {
       </form>
       <Divider text="or" />
       <Button
-        variant="secondary"
         value="Continue with Google"
         type="submit"
-        action={handleSubmit}
+        action={handleGoogleSignIn}
+        loading={googleLoading}
+        fullWidth
+        variant="secondary"
       />
       <div className="text-primary text-center">
         Want to become a member? <Link to="/sign-up">Sign Up</Link>

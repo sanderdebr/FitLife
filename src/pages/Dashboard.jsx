@@ -10,7 +10,7 @@ function Dashboard() {
 
   return (
     <div className="space-y-10">
-      <div className="flex space-x-10 align-end">
+      <div className="flex space-x-10 items-end">
         <h1 className="text-4xl">Dashboard</h1>
         <Button
           value="Start workout"

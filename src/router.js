@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import DashboardLayout from "./layouts/DashboardLayout";
 import SignInLayout from "./layouts/SignInLayout";
 import Dashboard from "./pages/Dashboard";
+import Workout from "./pages/Workout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
@@ -20,6 +21,12 @@ function Router() {
             privateRoute
             layout={DashboardLayout}
             page={Dashboard}
+          />
+          <RouteWrapper
+            path="/workout"
+            privateRoute
+            layout={DashboardLayout}
+            page={Workout}
           />
         </Switch>
       </AuthProvider>

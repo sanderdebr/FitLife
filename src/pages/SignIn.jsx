@@ -85,7 +85,7 @@ function SignIn() {
         action={handleGoogleSignIn}
         loading={googleLoading}
         fullWidth
-        variant="secondary"
+        variant="frame"
       />
       <div className="text-primary text-center">
         Want to become a member? <Link to="/sign-up">Sign Up</Link>

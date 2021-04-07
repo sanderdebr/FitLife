@@ -15,3 +15,13 @@ export function padNum(val) {
   let valStr = val + "";
   return valStr.length < 2 ? "0" + valStr : valStr;
 }
+
+/*--------------------------
+  Format document from Firestore
+ --------------------------- */
+export function formatDocument(doc) {
+  return {
+    id: doc.id,
+    ...doc.data(),
+  };
+}

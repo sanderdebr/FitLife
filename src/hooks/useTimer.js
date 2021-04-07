@@ -10,7 +10,7 @@ function useTimer() {
     setIsActive(true);
     countRef.current = setInterval(() => {
       setTimer((timer) => timer + 1);
-    }, 100);
+    }, 1000);
   };
 
   const stopTimer = () => {

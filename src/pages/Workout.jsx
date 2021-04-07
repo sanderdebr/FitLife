@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
+import SelectExercise from "../components/SelectExercise";
+import WorkoutScheme from "../components/WorkoutScheme";
 import { padNum } from "../helpers";
 import useTimer from "../hooks/useTimer";
+import { defaultSet } from "../constants";
 
 function Workout() {
   const minutesRef = useRef();
@@ -22,40 +26,72 @@ function Workout() {
     minutesRef.current.innerHTML = padNum(parseInt(timer / 60));
   }, [timer]);
 
-  const loading = null;
+  const [showModal, setShowModal] = useState(false);
+  const [workout, setWorkout] = useState({ exercises: [] });
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const addExercise = (exerciseName) => {
+    setWorkout((workout) => ({
+      ...workout,
+      exercises: [...workout.exercises, { exerciseName, sets: [defaultSet] }],
+    }));
+  };
 
   return (
-    <div className="space-y-10">
-      <div className="flex space-x-10 items-end">
-        <h1 className="text-4xl">Workout</h1>
-        <div className="flex items-center space-x-4">
-          <Button
-            value={isActive ? "Stop workout" : "Start empty workout"}
-            type="submit"
-            action={isActive ? stopTimer : startTimer}
-          />
-          {isActive ? (
+    <>
+      {showModal && (
+        <Modal>
+          <SelectExercise toggleModal={toggleModal} addExercise={addExercise} />
+        </Modal>
+      )}
+      <div className="space-y-10">
+        <div className="flex space-x-10 items-end">
+          <h1 className="text-4xl">Workout</h1>
+          <div className="flex items-center space-x-4">
             <Button
+              value={isActive ? "Stop workout" : "Start empty workout"}
               type="submit"
-              action={isPaused ? resumeTimer : pauseTimer}
-              icon={isPaused ? "play" : "pause"}
-              variant="frame"
+              variant={isActive ? "frame" : "primary"}
+              action={isActive ? stopTimer : startTimer}
             />
-          ) : (
-            <Button value="Pick a template" type="submit" action={null} />
-          )}
-          <div className="text-2xl">
-            <span ref={minutesRef}>00</span>:<span ref={secondsRef}>00</span>
+            {isActive && (
+              <Button
+                value="Add exercise"
+                variant="primary"
+                type="submit"
+                action={toggleModal}
+              />
+            )}
+            {isActive ? (
+              <Button
+                type="submit"
+                action={isPaused ? resumeTimer : pauseTimer}
+                icon={isPaused ? "play" : "pause"}
+                variant="primary"
+              />
+            ) : (
+              <Button
+                value="Pick a template"
+                variant="frame"
+                type="submit"
+                action={null}
+              />
+            )}
+            <div className="text-2xl">
+              <span ref={minutesRef}>00</span>:<span ref={secondsRef}>00</span>
+            </div>
           </div>
         </div>
+        <main className="flex flex-col">
+          <section className="bg-white text-primary p-10 rounded-xl space-y-4">
+            <WorkoutScheme workout={workout} />
+          </section>
+        </main>
       </div>
-      <main className="grid grid-cols-3 gap-10">
-        <section className="bg-primary text-white p-10 rounded-xl">
-          Workout: 87
-        </section>
-        <section className="col-span-2 bg-white p-10 rounded-xl">Right</section>
-      </main>
-    </div>
+    </>
   );
 }
 

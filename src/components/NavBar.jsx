@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Icon from "./Icon";
 
 function NavBar({ links }) {
   return (
@@ -11,10 +12,10 @@ function NavBar({ links }) {
               className={`${
                 active
                   ? "bg-primary text-white"
-                  : "bg-white text-primary hover:bg-primary hover:text-white"
-              } font-regular px-12 py-3 font-normal rounded-xl transition-all w-full flex items-center justify-start space-x-4`}
+                  : "bg-white text-primary hover:bg-gray-100 hover:text-primary"
+              } font-regular px-12 py-3 font-normal rounded-full transition-all w-full flex items-center justify-start space-x-4`}
             >
-              {icon}
+              {icon && <Icon type={icon} />}
               <div>{label}</div>
             </li>
           </Link>

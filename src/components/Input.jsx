@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({ name, type, label, value, handleChange }) {
+function Input({ name, type, placeholder, label, value, handleChange }) {
   return (
     <div className="flex flex-col space-y-3">
       <label htmlFor={name}>{label}</label>
@@ -9,6 +9,7 @@ function Input({ name, type, label, value, handleChange }) {
         id={name}
         name={name}
         type={type}
+        placeholder={placeholder}
         value={value}
         onChange={handleChange}
       />

@@ -59,6 +59,7 @@ function SignIn() {
         <Input
           name="email"
           type="email"
+          placeholder="Enter email address.."
           label="Email address"
           value={values.email}
           handleChange={handleChange}
@@ -66,6 +67,7 @@ function SignIn() {
         <Input
           name="password"
           type="password"
+          placeholder="Enter password.."
           label="Password"
           value={values.password}
           handleChange={handleChange}
@@ -74,18 +76,20 @@ function SignIn() {
         <Button
           value="Sign In"
           type="submit"
+          variant="primary"
           action={handleSubmit}
           loading={loading}
+          fullWidth
         />
       </form>
       <Divider text="or" />
       <Button
         value="Continue with Google"
         type="submit"
+        variant="frame"
         action={handleGoogleSignIn}
         loading={googleLoading}
         fullWidth
-        variant="frame"
       />
       <div className="text-primary text-center">
         Want to become a member? <Link to="/sign-up">Sign Up</Link>

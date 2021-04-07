@@ -1,7 +1,3 @@
-import { RiDashboard3Line, RiUser3Line } from "react-icons/ri";
-import { IoMdFitness } from "react-icons/io";
-import { GiStrong } from "react-icons/gi";
-
 /*--------------------------
   Icon properties
  --------------------------- */
@@ -16,21 +12,26 @@ export const navLinks = [
   {
     label: "Dashboard",
     to: "/",
-    icon: <RiDashboard3Line {...iconProps} />,
+    icon: "dashboard",
   },
   {
     label: "Workout",
     to: "/workout",
-    icon: <GiStrong {...iconProps} />,
-  },
-  {
-    label: "Exercises",
-    to: "/exercises",
-    icon: <IoMdFitness {...iconProps} />,
+    icon: "fitness",
   },
   {
     label: "Profile",
     to: "/profile",
-    icon: <RiUser3Line {...iconProps} />,
+    icon: "user",
   },
 ];
+
+/*--------------------------
+  Default set 
+ --------------------------- */
+export const defaultSet = {
+  id: 1,
+  weight: 45,
+  reps: 0,
+  isFinished: false,
+};

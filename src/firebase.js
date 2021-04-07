@@ -16,6 +16,13 @@ let app = !firebase.apps.length
   ? firebase.initializeApp(firebaseSettings)
   : firebase.app();
 
+const firestore = app.firestore();
+
+export const database = {
+  exercises: firestore.collection("exercises"),
+  getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp,
+};
+
 export const auth = app.auth();
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();

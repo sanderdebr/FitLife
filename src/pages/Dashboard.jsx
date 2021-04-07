@@ -14,7 +14,7 @@ function Dashboard() {
       <div className="flex space-x-10 items-end">
         <h1 className="text-4xl">Dashboard</h1>
         <Link to="/workout">
-          <Button value="Start workout" type="text" />
+          <Button value="New workout" variant="primary" type="text" />
         </Link>
       </div>
       <main className="grid grid-cols-3 gap-10">

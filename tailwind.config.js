@@ -9,7 +9,9 @@ module.exports = {
       }),
       colors: {
         primary: "#182277",
+        primaryDark: "#10185e",
         secondary: "#FFB7E4",
+        secondaryDark: "#de8cbf",
       },
     },
     fontFamily: {

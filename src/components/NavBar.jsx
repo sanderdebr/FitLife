@@ -7,7 +7,7 @@ function NavBar({ links }) {
     <nav>
       <ul className="flex flex-col space-y-4">
         {links.map(({ to, label, icon, active }) => (
-          <Link to={to}>
+          <Link to={to} key={label}>
             <li
               className={`${
                 active

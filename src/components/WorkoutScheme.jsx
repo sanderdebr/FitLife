@@ -2,40 +2,79 @@ import React from "react";
 import Button from "./Button";
 import Input from "./Input";
 
-function WorkoutScheme({ workout }) {
+function WorkoutScheme({
+  workout,
+  handleWorkout,
+  addSet,
+  removeSet,
+  throttle,
+}) {
   if (!workout.exercises.length) {
-    return <div>Add exercise first</div>;
+    return <div>Add some exercises</div>;
   }
 
-  const cellProps = "px-2 flex";
+  console.log("workout: ", workout);
 
   return (
-    <section className="max-w-lg w-full">
-      {workout.exercises.map(({ exerciseName, sets }) => (
-        <div>
-          <h3>{exerciseName}</h3>
-          <div className="bg-gray-100 flex items-center">
-            <div className={cellProps}>Set</div>
-            <div className={cellProps}>Kg</div>
-            <div className={cellProps}>Reps</div>
-            <div className={cellProps}></div>
+    <section>
+      {workout.exercises.map(({ exerciseName, sets }, exerciseIndex) => (
+        <div className="mb-6" key={exerciseIndex}>
+          <h3 className="text-lg mb-4">{exerciseName}</h3>
+          <div className="flex space-x-4 mb-2">
+            <div className="w-12">Set</div>
+            <div className="w-24">Kg</div>
+            <div className="w-24">Reps</div>
+            <div className="w-34"></div>
           </div>
           {sets.length &&
-            sets.map(({ id, weight, reps, isFinished }) => (
+            sets.map(({ weight, reps, isFinished }, setIndex) => (
               <div
-                className={`${
-                  isFinished && "bg-green-50"
-                } border border-0 border-b-1 border-gray-200 flex items-center`}
+                className={`${isFinished && "bg-green-50"} flex space-x-4 mb-4`}
+                key={setIndex}
               >
-                <div className={cellProps}>{id}</div>
-                <div className={cellProps}>
-                  <Input value={weight} />
+                <div className="w-12 flex items-center justify-center">
+                  {setIndex + 1}
                 </div>
-                <div className={cellProps}>
-                  <Input value={reps} />
+                <div className="w-24">
+                  <Input
+                    center
+                    value={weight}
+                    handleChange={(e) =>
+                      handleWorkout(
+                        exerciseIndex,
+                        setIndex,
+                        "weight",
+                        e.target.value
+                      )
+                    }
+                  />
                 </div>
-                <div className={cellProps}>
-                  <Button variant="primary" icon="check" />
+                <div className="w-24">
+                  <Input
+                    center
+                    value={reps}
+                    handleChange={(e) =>
+                      handleWorkout(
+                        exerciseIndex,
+                        setIndex,
+                        "reps",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
+                <div className="w-34 flex items-center justify-center space-x-2">
+                  <Button
+                    variant="secondary"
+                    icon="remove"
+                    action={() => removeSet(exerciseIndex, setIndex)}
+                  />
+                  <Button
+                    variant="primary"
+                    icon="plus"
+                    action={() => addSet(exerciseIndex)}
+                  />
+                  <Button icon="check" />
                 </div>
               </div>
             ))}

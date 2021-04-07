@@ -1,11 +1,19 @@
 import React from "react";
 
-function Input({ name, type, placeholder, label, value, handleChange }) {
+function Input({
+  name,
+  type,
+  placeholder,
+  label,
+  value,
+  center,
+  handleChange,
+}) {
   return (
     <div className="flex flex-col space-y-3">
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <input
-        className="border border-gray p-3"
+        className={`${center && "text-center"} border border-gray p-3`}
         id={name}
         name={name}
         type={type}

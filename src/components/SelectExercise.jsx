@@ -43,21 +43,21 @@ function SelectExercise({ toggleModal, addExercise }) {
 
   return (
     <>
-      <div class="bg-white p-4">
-        <div class="w-full">
+      <div className="bg-white p-4">
+        <div className="w-full">
           <div className="flex space-x-2 items-center">
-            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 sm:mx-0 sm:h-10 sm:w-10">
+            <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 sm:mx-0 sm:h-10 sm:w-10">
               <Icon type="fitness" />
             </div>
 
             <h3
-              class="text-lg leading-6 font-medium text-gray-900"
+              className="text-lg leading-6 font-medium text-gray-900"
               id="modal-title"
             >
               {showCreateExercise ? "Create exercise" : "Add exercise"}
             </h3>
           </div>
-          <div class="mt-4">
+          <div className="mt-4">
             {showCreateExercise ? (
               <CreateExercise
                 exerciseName={exerciseName}
@@ -65,13 +65,16 @@ function SelectExercise({ toggleModal, addExercise }) {
                 error={error}
               />
             ) : (
-              <ExerciseList addExercise={addExercise} />
+              <ExerciseList
+                addExercise={addExercise}
+                toggleModal={toggleModal}
+              />
             )}
           </div>
         </div>
       </div>
 
-      <div class="bg-gray-100 p-4 flex justify-between">
+      <div className="bg-gray-100 p-4 flex justify-between">
         {showCreateExercise ? (
           <CreateExerciseFooter
             toggleShowCreateExercise={toggleShowCreateExercise}
@@ -88,7 +91,7 @@ function SelectExercise({ toggleModal, addExercise }) {
   );
 }
 
-function ExerciseList({ addExercise }) {
+function ExerciseList({ addExercise, toggleModal }) {
   const { loading, exercises } = useExercises();
 
   if (loading) return <Icon type="loading" />;
@@ -97,9 +100,13 @@ function ExerciseList({ addExercise }) {
     <div className="flex flex-col space-y-2">
       {exercises.map(({ exerciseName }) => (
         <Button
+          key={exerciseName}
           value={exerciseName}
           variant="primary"
-          action={() => addExercise(exerciseName)}
+          action={() => {
+            addExercise(exerciseName);
+            toggleModal();
+          }}
         />
       ))}
     </div>

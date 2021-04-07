@@ -30,7 +30,6 @@ export const navLinks = [
   Default set 
  --------------------------- */
 export const defaultSet = {
-  id: 1,
   weight: 45,
   reps: 0,
   isFinished: false,

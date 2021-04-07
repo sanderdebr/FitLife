@@ -2,10 +2,11 @@ import React from "react";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import { iconProps } from "../constants";
 import { RiDashboard3Line, RiUser3Line } from "react-icons/ri";
-import { IoMdFitness } from "react-icons/io";
+import { IoMdFitness, IoIosRemoveCircleOutline } from "react-icons/io";
 import {
   AiOutlineLoading3Quarters,
   AiOutlineCheckCircle,
+  AiOutlinePlusCircle,
 } from "react-icons/ai";
 
 const icons = {
@@ -16,6 +17,8 @@ const icons = {
   dashboard: RiDashboard3Line,
   fitness: IoMdFitness,
   user: RiUser3Line,
+  remove: IoIosRemoveCircleOutline,
+  plus: AiOutlinePlusCircle,
 };
 
 function Icon({ type }) {

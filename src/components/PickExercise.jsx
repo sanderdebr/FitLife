@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth/AuthContext";
 import { database } from "../firebase";
 import useExercises from "../hooks/useExercises";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
 
-function SelectExercise({ toggleModal, addExercise }) {
+function PickExercise({ toggleModal, addExercise }) {
   const [showCreateExercise, setShowCreateExercise] = useState(false);
   const [exerciseName, setExerciseName] = useState("");
   const [error, setError] = useState("");
@@ -153,4 +153,4 @@ function CreateExerciseFooter({ toggleShowCreateExercise, saveExercise }) {
   );
 }
 
-export default SelectExercise;
+export default PickExercise;

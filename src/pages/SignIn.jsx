@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
 import Divider from "../components/Divider";
 import Input from "../components/Input";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth/AuthContext";
 
 function SignIn() {
   const { signIn, signInWithGoogle } = useAuth();

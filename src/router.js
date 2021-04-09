@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/auth/AuthContext";
+import { WorkoutProvider } from "./contexts/workout/WorkoutContext";
 import DashboardLayout from "./layouts/DashboardLayout";
 import SignInLayout from "./layouts/SignInLayout";
 import Dashboard from "./pages/Dashboard";
@@ -12,23 +13,25 @@ function Router() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Switch>
-          <RouteWrapper path="/sign-in" layout={SignInLayout} page={SignIn} />
-          <RouteWrapper path="/sign-up" layout={SignInLayout} page={SignUp} />
-          <RouteWrapper
-            exact
-            path="/"
-            privateRoute
-            layout={DashboardLayout}
-            page={Dashboard}
-          />
-          <RouteWrapper
-            path="/workout"
-            privateRoute
-            layout={DashboardLayout}
-            page={Workout}
-          />
-        </Switch>
+        <WorkoutProvider>
+          <Switch>
+            <RouteWrapper path="/sign-in" layout={SignInLayout} page={SignIn} />
+            <RouteWrapper path="/sign-up" layout={SignInLayout} page={SignUp} />
+            <RouteWrapper
+              exact
+              path="/"
+              privateRoute
+              layout={DashboardLayout}
+              page={Dashboard}
+            />
+            <RouteWrapper
+              path="/workout"
+              privateRoute
+              layout={DashboardLayout}
+              page={Workout}
+            />
+          </Switch>
+        </WorkoutProvider>
       </AuthProvider>
     </BrowserRouter>
   );

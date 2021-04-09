@@ -3,12 +3,12 @@ import { padNum } from "../helpers";
 import useTimer from "../hooks/useTimer";
 import Button from "./Button";
 
-function Timer({ toggleModal }) {
+function WorkoutTimer({ toggleModal }) {
   const minutesRef = useRef();
   const secondsRef = useRef();
 
   const {
-    timer,
+    secondsPassed,
     isActive,
     isPaused,
     startTimer,
@@ -18,9 +18,9 @@ function Timer({ toggleModal }) {
   } = useTimer(minutesRef, secondsRef);
 
   useEffect(() => {
-    secondsRef.current.innerHTML = padNum(timer % 60);
-    minutesRef.current.innerHTML = padNum(parseInt(timer / 60));
-  }, [timer]);
+    secondsRef.current.innerHTML = padNum(secondsPassed % 60);
+    minutesRef.current.innerHTML = padNum(parseInt(secondsPassed / 60));
+  }, [secondsPassed]);
 
   return (
     <div className="flex items-center space-x-4">
@@ -60,4 +60,4 @@ function Timer({ toggleModal }) {
   );
 }
 
-export default Timer;
+export default WorkoutTimer;

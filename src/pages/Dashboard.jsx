@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../components/Button";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth/AuthContext";
 
 function Dashboard() {
   const { user } = useAuth();

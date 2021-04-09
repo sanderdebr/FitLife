@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import Logo from "../components/Logo";
 import NavBar from "../components/NavBar";
 import { navLinks } from "../constants";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth/AuthContext";
 import { getActiveNavLink } from "../helpers";
 
 function DashboardLayout({ children }) {

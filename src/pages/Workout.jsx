@@ -1,67 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "../components/Modal";
-import SelectExercise from "../components/SelectExercise";
-import Timer from "../components/Timer";
+import PickExercise from "../components/PickExercise";
 import WorkoutScheme from "../components/WorkoutScheme";
+import WorkoutTimer from "../components/WorkoutTimer";
 import { defaultSet } from "../constants";
+import { useWorkoutDispatch } from "../contexts/workout/WorkoutContext";
 
 function Workout() {
   const [showModal, setShowModal] = useState(false);
-  const [workout, setWorkout] = useState({ exercises: [] });
+
+  const dispatch = useWorkoutDispatch();
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
   const addExercise = (exerciseName) => {
-    setWorkout((workout) => ({
-      ...workout,
-      exercises: [...workout.exercises, { exerciseName, sets: [defaultSet] }],
-    }));
-  };
-
-  const handleWorkout = (exerciseIndex, setIndex, field, newValue) => {
-    setWorkout((workout) => {
-      workout.exercises[exerciseIndex].sets[setIndex][field] = newValue;
-      return workout;
+    const exercise = {
+      exerciseName,
+      sets: [defaultSet],
+    };
+    dispatch({
+      type: "ADD_EXERCISE",
+      payload: exercise,
     });
   };
-
-  const removeSet = (exerciseIndex, setIndex) => {
-    setWorkout((workout) => {
-      workout.exercises[exerciseIndex].sets.splice(setIndex, 1);
-      return workout;
-    });
-  };
-
-  const addSet = (exerciseIndex) => {
-    setWorkout((workout) => {
-      const newWorkout = { ...workout };
-      newWorkout.exercises[exerciseIndex].sets.push(defaultSet);
-      return newWorkout;
-    });
-  };
-
   return (
     <>
       {showModal && (
         <Modal>
-          <SelectExercise toggleModal={toggleModal} addExercise={addExercise} />
+          <PickExercise toggleModal={toggleModal} addExercise={addExercise} />
         </Modal>
       )}
       <div className="space-y-10">
         <div className="flex space-x-10 items-end">
           <h1 className="text-4xl">Workout</h1>
-          <Timer toggleModal={toggleModal} />
+          <WorkoutTimer toggleModal={toggleModal} />
         </div>
         <main className="flex flex-col">
           <section className="bg-white text-primary p-10 rounded-xl space-y-4">
-            <WorkoutScheme
-              workout={workout}
-              handleWorkout={handleWorkout}
-              addSet={addSet}
-              removeSet={removeSet}
-            />
+            <WorkoutScheme />
           </section>
         </main>
       </div>

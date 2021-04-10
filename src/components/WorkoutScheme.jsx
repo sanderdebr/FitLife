@@ -12,6 +12,8 @@ function WorkoutScheme() {
 
   const dispatch = useWorkoutDispatch();
 
+  console.log("render scheme");
+
   // Add set
   const [addSet, setAddSet] = useState(null);
 
@@ -117,7 +119,24 @@ function WorkoutScheme() {
   const updateRepsHandler = (exerciseId, setId, newReps) =>
     setReps({ exerciseId, setId, newReps });
 
-  if (!Object.keys(exercises).length) {
+  // Remove exercise
+  const [removeExercise, setRemoveExercise] = useState(null);
+
+  useEffect(() => {
+    if (removeExercise === null) return;
+
+    dispatch({
+      type: "REMOVE_EXERCISE",
+      payload: removeExercise,
+    });
+
+    setRemoveExercise(null);
+  }, [dispatch, removeExercise]);
+
+  const removeExerciseHandler = (exerciseId) =>
+    setRemoveExercise({ exerciseId });
+
+  if (!Object.values(exercises).length) {
     return <div>Add some exercises</div>;
   }
 
@@ -125,14 +144,20 @@ function WorkoutScheme() {
     ([exerciseId, { exerciseName, sets }]) => (
       <section>
         <div className="mb-6" key={exerciseId}>
-          <h3 className="text-lg mb-4">{exerciseName}</h3>
+          <div className="flex space-x-2 items-baseline">
+            <h3 className="text-lg mb-4">{exerciseName}</h3>
+            <Button
+              icon="remove"
+              action={() => removeExerciseHandler(exerciseId)}
+            />
+          </div>
           <div className="flex space-x-4 mb-2">
             <div className="w-12">Set</div>
             <div className="w-24">Kg</div>
             <div className="w-24">Reps</div>
             <div className="w-34"></div>
           </div>
-          {Object.keys(sets).length &&
+          {Object.values(sets).length &&
             Object.entries(sets).map(
               ([setId, { weight, reps, isFinished }]) => (
                 <div
@@ -142,7 +167,7 @@ function WorkoutScheme() {
                   key={setId}
                 >
                   <div className="w-12 flex items-center justify-center">
-                    {setId}
+                    nr
                   </div>
                   <div className="w-24">
                     <Input

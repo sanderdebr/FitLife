@@ -28,6 +28,9 @@ export const rootReducer = produce((draft, { type, payload }) => {
     case "REMOVE_SET":
       delete draft.exercises[payload.exerciseId].sets[payload.setId];
       break;
+    case "REMOVE_EXERCISE":
+      delete draft.exercises[payload.exerciseId];
+      break;
     case "TOGGLE_FINISHED":
       draft.exercises[payload.exerciseId].sets[
         payload.setId

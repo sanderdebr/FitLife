@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useWorkoutState } from "../contexts/workout/WorkoutContext";
 import { padNum } from "../helpers";
 import useTimer from "../hooks/useTimer";
 import Button from "./Button";
@@ -6,6 +7,8 @@ import Button from "./Button";
 function WorkoutTimer({ toggleModal }) {
   const minutesRef = useRef();
   const secondsRef = useRef();
+
+  const { exercises } = useWorkoutState();
 
   const {
     secondsPassed,
@@ -15,7 +18,13 @@ function WorkoutTimer({ toggleModal }) {
     stopTimer,
     pauseTimer,
     resumeTimer,
-  } = useTimer(minutesRef, secondsRef);
+  } = useTimer();
+
+  useEffect(() => {
+    if (Object.values(exercises).length > 0) {
+      startTimer();
+    }
+  }, []);
 
   useEffect(() => {
     secondsRef.current.innerHTML = padNum(secondsPassed % 60);

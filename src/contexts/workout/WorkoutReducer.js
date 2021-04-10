@@ -1,16 +1,25 @@
-import { defaultSet } from "../../constants";
 import produce from "immer";
+import { defaultSet } from "../../constants";
+import { persist } from "../../helpers";
 
 const initialState = {
   exercises: {},
+  workoutInProgress: false,
 };
 
-export const initializer = localStorage.getItem("workout")
-  ? JSON.parse(localStorage.getItem("workout"))
+export const initializer = persist("get", "workout")
+  ? persist("get", "workout")
   : initialState;
 
 export const rootReducer = produce((draft, { type, payload }) => {
   switch (type) {
+    case "START_WORKOUT":
+      draft.workoutInProgress = true;
+      break;
+    case "DISCARD_WORKOUT":
+      draft.exercises = {};
+      draft.workoutInProgress = false;
+      break;
     case "UPDATE_WEIGHT":
       draft.exercises[payload.exerciseId].sets[payload.setId].weight =
         payload.weight;

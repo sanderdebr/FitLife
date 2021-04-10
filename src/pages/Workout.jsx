@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Modal from "../components/Modal";
 import PickExercise from "../components/PickExercise";

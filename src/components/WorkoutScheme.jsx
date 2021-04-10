@@ -12,7 +12,7 @@ function WorkoutScheme() {
 
   const dispatch = useWorkoutDispatch();
 
-  console.log("render scheme");
+  console.log("rerender scheme");
 
   // Add set
   const [addSet, setAddSet] = useState(null);
@@ -153,8 +153,8 @@ function WorkoutScheme() {
           </div>
           <div className="flex space-x-4 mb-2">
             <div className="w-12">Set</div>
-            <div className="w-24">Kg</div>
-            <div className="w-24">Reps</div>
+            <div className="w-32">Kg</div>
+            <div className="w-32">Reps</div>
             <div className="w-34"></div>
           </div>
           {Object.values(sets).length &&
@@ -169,7 +169,7 @@ function WorkoutScheme() {
                   <div className="w-12 flex items-center justify-center">
                     nr
                   </div>
-                  <div className="w-24">
+                  <div className="w-32">
                     <Input
                       center
                       value={weight}
@@ -178,7 +178,7 @@ function WorkoutScheme() {
                       }
                     />
                   </div>
-                  <div className="w-24">
+                  <div className="w-32">
                     <Input
                       center
                       value={reps}

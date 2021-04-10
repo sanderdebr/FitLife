@@ -1,10 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { persist } from "../helpers";
 
 function useTimer() {
   const countRef = useRef();
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [secondsPassed, setSecondsPassed] = useState(0);
+  const [secondsPassed, setSecondsPassed] = useState(
+    persist("get", "timer") || 0
+  );
+
+  useEffect(() => {
+    persist("set", "timer", secondsPassed);
+  }, [secondsPassed]);
 
   const startTimer = () => {
     setIsActive(true);
@@ -30,6 +37,11 @@ function useTimer() {
     startTimer();
   };
 
+  const resetTimer = () => {
+    stopTimer();
+    persist("set", "timer", 0);
+  };
+
   return {
     secondsPassed,
     isActive,
@@ -38,6 +50,7 @@ function useTimer() {
     stopTimer,
     pauseTimer,
     resumeTimer,
+    resetTimer,
   };
 }
 

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   useWorkoutDispatch,
   useWorkoutState,
 } from "../contexts/workout/WorkoutContext";
+import { v4 as uuidv4 } from "uuid";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -11,34 +12,119 @@ function WorkoutScheme() {
 
   const dispatch = useWorkoutDispatch();
 
-  const addSet = (exerciseIndex) =>
+  // Add set
+  const [addSet, setAddSet] = useState(null);
+
+  useEffect(() => {
+    if (addSet === null) return;
+
     dispatch({
       type: "ADD_SET",
-      payload: exerciseIndex,
+      payload: {
+        exerciseId: addSet,
+        setId: uuidv4(),
+      },
     });
 
-  const removeSet = (exerciseIndex, setIndex) =>
+    setAddSet(null);
+  }, [dispatch, addSet]);
+
+  const addSetHandler = (exerciseId) => setAddSet(exerciseId);
+
+  // Remove set
+  const [removeSet, setRemoveSet] = useState(null);
+
+  useEffect(() => {
+    if (removeSet === null) return;
+    const { exerciseId, setId } = removeSet;
+
     dispatch({
       type: "REMOVE_SET",
-      payload: { exerciseIndex, setIndex },
+      payload: {
+        exerciseId,
+        setId,
+      },
     });
 
-  const toggleFinished = (exerciseIndex, setIndex) =>
+    setRemoveSet(null);
+  }, [dispatch, removeSet]);
+
+  const removeSetHandler = (exerciseId, setId) =>
+    setRemoveSet({ exerciseId, setId });
+
+  // Toggle finished
+  const [toggleFinished, setToggleFinished] = useState(null);
+
+  useEffect(() => {
+    if (toggleFinished === null) return;
+    const { exerciseId, setId } = toggleFinished;
+
     dispatch({
       type: "TOGGLE_FINISHED",
-      payload: { exerciseIndex, setIndex },
+      payload: {
+        exerciseId,
+        setId,
+      },
     });
 
-  console.log("exercises:", exercises);
+    setToggleFinished(null);
+  }, [dispatch, toggleFinished]);
 
-  if (!exercises.length) {
+  const toggleFinishedHandler = (exerciseId, setId) =>
+    setToggleFinished({ exerciseId, setId });
+
+  // Update weight
+  const [weight, setWeight] = useState(null);
+
+  useEffect(() => {
+    if (weight === null) return;
+    const { exerciseId, setId, newWeight } = weight;
+
+    dispatch({
+      type: "UPDATE_WEIGHT",
+      payload: {
+        exerciseId,
+        setId,
+        newWeight,
+      },
+    });
+
+    setWeight(null);
+  }, [dispatch, weight]);
+
+  const updateWeightHandler = (exerciseId, setId, newWeight) =>
+    setWeight({ exerciseId, setId, newWeight });
+
+  // Update reps
+  const [reps, setReps] = useState(null);
+
+  useEffect(() => {
+    if (reps === null) return;
+    const { exerciseId, setId, newReps } = reps;
+
+    dispatch({
+      type: "UPDATE_REPS",
+      payload: {
+        exerciseId,
+        setId,
+        newReps,
+      },
+    });
+
+    setReps(null);
+  }, [dispatch, reps]);
+
+  const updateRepsHandler = (exerciseId, setId, newReps) =>
+    setReps({ exerciseId, setId, newReps });
+
+  if (!Object.keys(exercises).length) {
     return <div>Add some exercises</div>;
   }
 
-  return (
-    <section>
-      {exercises.map(({ exerciseName, sets }, exerciseIndex) => (
-        <div className="mb-6" key={exerciseIndex}>
+  return Object.entries(exercises).map(
+    ([exerciseId, { exerciseName, sets }]) => (
+      <section>
+        <div className="mb-6" key={exerciseId}>
           <h3 className="text-lg mb-4">{exerciseName}</h3>
           <div className="flex space-x-4 mb-2">
             <div className="w-12">Set</div>
@@ -46,45 +132,61 @@ function WorkoutScheme() {
             <div className="w-24">Reps</div>
             <div className="w-34"></div>
           </div>
-          {sets.length &&
-            sets.map(({ weight, reps, isFinished }, setIndex) => (
-              <div
-                className={`${isFinished && "bg-green-50"} flex space-x-4 py-2`}
-                key={setIndex}
-              >
-                <div className="w-12 flex items-center justify-center">
-                  {setIndex + 1}
-                </div>
-                <div className="w-24">
-                  <Input center value={weight} handleChange={null} />
-                </div>
-                <div className="w-24">
-                  <Input center value={reps} handleChange={null} />
-                </div>
-                <div className="w-34 flex items-center justify-center space-x-2">
-                  <Button
-                    variant="secondary"
-                    icon="remove"
-                    action={() => removeSet(exerciseIndex, setIndex)}
-                  />
+          {Object.keys(sets).length &&
+            Object.entries(sets).map(
+              ([setId, { weight, reps, isFinished }]) => (
+                <div
+                  className={`${
+                    isFinished && "bg-green-50"
+                  } flex space-x-4 py-2`}
+                  key={setId}
+                >
+                  <div className="w-12 flex items-center justify-center">
+                    {setId}
+                  </div>
+                  <div className="w-24">
+                    <Input
+                      center
+                      value={weight}
+                      handleChange={(e) =>
+                        updateWeightHandler(exerciseId, setId, e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="w-24">
+                    <Input
+                      center
+                      value={reps}
+                      handleChange={(e) =>
+                        updateRepsHandler(exerciseId, setId, e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="w-34 flex items-center justify-center space-x-2">
+                    <Button
+                      variant="secondary"
+                      icon="remove"
+                      action={() => removeSetHandler(exerciseId, setId)}
+                    />
 
-                  <Button
-                    icon="check"
-                    variant={isFinished ? "primary" : "secondary"}
-                    action={() => toggleFinished(exerciseIndex, setIndex)}
-                  />
+                    <Button
+                      icon="check"
+                      variant={isFinished ? "primary" : "secondary"}
+                      action={() => toggleFinishedHandler(exerciseId, setId)}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           <Button
             value="Add set"
             variant="primary"
             icon="plus"
-            action={() => addSet(exerciseIndex)}
+            action={() => addSetHandler(exerciseId)}
           />
         </div>
-      ))}
-    </section>
+      </section>
+    )
   );
 }
 

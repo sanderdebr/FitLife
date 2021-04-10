@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Modal from "../components/Modal";
 import PickExercise from "../components/PickExercise";
 import WorkoutScheme from "../components/WorkoutScheme";
@@ -18,13 +19,15 @@ function Workout() {
   const addExercise = (exerciseName) => {
     const exercise = {
       exerciseName,
-      sets: [defaultSet],
+      sets: { [uuidv4()]: defaultSet },
     };
+
     dispatch({
       type: "ADD_EXERCISE",
-      payload: exercise,
+      payload: { exerciseId: uuidv4(), exercise },
     });
   };
+
   return (
     <>
       {showModal && (

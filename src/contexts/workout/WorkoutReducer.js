@@ -1,57 +1,41 @@
 import { defaultSet } from "../../constants";
+import produce from "immer";
 
 const initialState = {
-  exercises: [],
+  exercises: {},
 };
 
 export const initializer = localStorage.getItem("workout")
   ? JSON.parse(localStorage.getItem("workout"))
   : initialState;
 
-export const rootReducer = (state, { type, payload, error }) => {
+export const rootReducer = produce((draft, { type, payload }) => {
   switch (type) {
-    case "ADD_EXERCISE": {
-      return {
-        ...state,
-        exercises: [...state.exercises, payload],
-      };
-    }
-    case "ADD_SET": {
-      let newExercises = [...state.exercises];
-      newExercises[payload].sets.push(defaultSet);
-
-      return {
-        ...state,
-        exercises: newExercises,
-      };
-    }
-    case "REMOVE_SET": {
-      const { exerciseIndex, setIndex } = payload;
-
-      let newExercises = [...state.exercises];
-      newExercises[exerciseIndex].sets.splice(setIndex, 1);
-
-      return {
-        ...state,
-        exercises: newExercises,
-      };
-    }
-    case "TOGGLE_FINISHED": {
-      const { exerciseIndex, setIndex } = payload;
-
-      let newExercises = [...state.exercises];
-
-      newExercises[exerciseIndex].sets[0].isFinished = !newExercises[
-        exerciseIndex
-      ].sets[0].isFinished;
-
-      return {
-        ...state,
-        exercises: newExercises,
-      };
-    }
+    case "UPDATE_WEIGHT":
+      draft.exercises[payload.exerciseId].sets[payload.setId].weight =
+        payload.weight;
+      break;
+    case "UPDATE_REPS":
+      draft.exercises[payload.exerciseId].sets[payload.setId].reps =
+        payload.reps;
+      break;
+    case "ADD_EXERCISE":
+      draft.exercises[payload.exerciseId] = payload.exercise;
+      break;
+    case "ADD_SET":
+      draft.exercises[payload.exerciseId].sets[payload.setId] = defaultSet;
+      break;
+    case "REMOVE_SET":
+      delete draft.exercises[payload.exerciseId].sets[payload.setId];
+      break;
+    case "TOGGLE_FINISHED":
+      draft.exercises[payload.exerciseId].sets[
+        payload.setId
+      ].isFinished = !draft.exercises[payload.exerciseId].sets[payload.setId]
+        .isFinished;
+      break;
     default: {
-      throw new Error(`Unhanlded action type: ${type}`);
+      throw new Error(`Unhandled action type: ${type}`);
     }
   }
-};
+});

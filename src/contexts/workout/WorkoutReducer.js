@@ -2,6 +2,18 @@ import produce from "immer";
 import { defaultSet } from "../../constants";
 import { persist } from "../../helpers";
 
+const ACTIONS = {
+  START_WORKOUT: "START_WORKOUT",
+  DISCARD_WORKOUT: "DISCARD_WORKOUT",
+  UPDATE_WEIGHT: "UPDATE_WEIGHT",
+  UPDATE_REPS: "UPDATE_REPS",
+  ADD_EXERCISE: "ADD_EXERCISE",
+  ADD_SET: "ADD_SET",
+  REMOVE_SET: "REMOVE_SET",
+  REMOVE_EXERCISE: "REMOVE_EXERCISE",
+  TOGGLE_FINISHED: "TOGGLE_FINISHED",
+};
+
 const initialState = {
   exercises: {},
   workoutInProgress: false,
@@ -13,41 +25,40 @@ export const initializer = persist("get", "workout")
 
 export const rootReducer = produce((draft, { type, payload }) => {
   switch (type) {
-    case "START_WORKOUT":
+    case ACTIONS.START_WORKOUT:
       draft.workoutInProgress = true;
       break;
-    case "DISCARD_WORKOUT":
+    case ACTIONS.DISCARD_WORKOUT:
       draft.exercises = {};
       draft.workoutInProgress = false;
       break;
-    case "UPDATE_WEIGHT":
+    case ACTIONS.UPDATE_WEIGHT:
       draft.exercises[payload.exerciseId].sets[payload.setId].weight =
         payload.weight;
       break;
-    case "UPDATE_REPS":
+    case ACTIONS.UPDATE_REPS:
       draft.exercises[payload.exerciseId].sets[payload.setId].reps =
         payload.reps;
       break;
-    case "ADD_EXERCISE":
+    case ACTIONS.ADD_EXERCISE:
       draft.exercises[payload.exerciseId] = payload.exercise;
       break;
-    case "ADD_SET":
+    case ACTIONS.ADD_SET:
       draft.exercises[payload.exerciseId].sets[payload.setId] = defaultSet;
       break;
-    case "REMOVE_SET":
+    case ACTIONS.REMOVE_SET:
       delete draft.exercises[payload.exerciseId].sets[payload.setId];
       break;
-    case "REMOVE_EXERCISE":
+    case ACTIONS.REMOVE_EXERCISE:
       delete draft.exercises[payload.exerciseId];
       break;
-    case "TOGGLE_FINISHED":
+    case ACTIONS.TOGGLE_FINISHED:
       draft.exercises[payload.exerciseId].sets[
         payload.setId
       ].isFinished = !draft.exercises[payload.exerciseId].sets[payload.setId]
         .isFinished;
       break;
-    default: {
+    default:
       throw new Error(`Unhandled action type: ${type}`);
-    }
   }
 });

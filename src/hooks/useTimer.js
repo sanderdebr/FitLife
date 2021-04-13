@@ -10,6 +10,14 @@ function useTimer() {
   );
 
   useEffect(() => {
+    const persistedSeconds = persist("get", "timer");
+    if (persistedSeconds > 0) {
+      startTimer();
+      setSecondsPassed(persistedSeconds);
+    }
+  }, []);
+
+  useEffect(() => {
     persist("set", "timer", secondsPassed);
   }, [secondsPassed]);
 
@@ -37,11 +45,6 @@ function useTimer() {
     startTimer();
   };
 
-  const resetTimer = () => {
-    stopTimer();
-    persist("set", "timer", 0);
-  };
-
   return {
     secondsPassed,
     isActive,
@@ -50,7 +53,6 @@ function useTimer() {
     stopTimer,
     pauseTimer,
     resumeTimer,
-    resetTimer,
   };
 }
 

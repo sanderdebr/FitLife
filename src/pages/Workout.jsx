@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from "react";
 import Modal from "../components/Modal";
-import PickExercise from "../components/PickExercise";
+import SelectExercise from "../components/SelectExercise";
 import WorkoutScheme from "../components/WorkoutScheme";
 import WorkoutTimer from "../components/WorkoutTimer";
-import { defaultSet } from "../constants";
-import { useWorkoutDispatch } from "../contexts/workout/WorkoutContext";
 
 function Workout() {
   const [showModal, setShowModal] = useState(false);
 
-  const dispatch = useWorkoutDispatch();
-
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
-
-  const addExercise = (exerciseName) => {
-    const exercise = {
-      exerciseName,
-      sets: { [uuidv4()]: defaultSet },
-    };
-
-    dispatch({
-      type: "ADD_EXERCISE",
-      payload: { exerciseId: uuidv4(), exercise },
-    });
   };
 
   return (
     <>
       {showModal && (
         <Modal>
-          <PickExercise toggleModal={toggleModal} addExercise={addExercise} />
+          <SelectExercise toggleModal={toggleModal} />
         </Modal>
       )}
       <div className="space-y-10">

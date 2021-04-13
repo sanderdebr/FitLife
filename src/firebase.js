@@ -20,6 +20,7 @@ const firestore = app.firestore();
 
 export const database = {
   exercises: firestore.collection("exercises"),
+  workouts: firestore.collection("workouts"),
   getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp,
 };
 

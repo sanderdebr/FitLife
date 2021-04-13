@@ -12,8 +12,6 @@ function WorkoutScheme() {
 
   const dispatch = useWorkoutDispatch();
 
-  console.log("rerender scheme");
-
   // Add set
   const [addSet, setAddSet] = useState(null);
 
@@ -142,7 +140,7 @@ function WorkoutScheme() {
 
   return Object.entries(exercises).map(
     ([exerciseId, { exerciseName, sets }]) => (
-      <section>
+      <section key={exerciseId}>
         <div className="mb-6" key={exerciseId}>
           <div className="flex space-x-2 items-baseline">
             <h3 className="text-lg mb-4">{exerciseName}</h3>

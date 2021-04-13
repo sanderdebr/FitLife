@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/auth/AuthContext";
 import { database } from "../firebase";
-import useExercises from "../hooks/useExercises";
+import useWorkoutDb from "../hooks/useWorkoutDb";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
+import { v4 as uuidv4 } from "uuid";
+import { defaultSet } from "../constants";
+import { useWorkoutDispatch } from "../contexts/workout/WorkoutContext";
 
-function PickExercise({ toggleModal, addExercise }) {
+function SelectExercise({ toggleModal }) {
   const [showCreateExercise, setShowCreateExercise] = useState(false);
   const [exerciseName, setExerciseName] = useState("");
   const [error, setError] = useState("");
 
   const { user } = useAuth();
 
+  const dispatch = useWorkoutDispatch();
+
   const toggleShowCreateExercise = () => {
     setShowCreateExercise(!showCreateExercise);
   };
 
-  const handleChange = (e) => {
+  const handleChangeName = (e) => {
     setExerciseName(e.target.value);
   };
 
@@ -41,6 +46,18 @@ function PickExercise({ toggleModal, addExercise }) {
     }
   };
 
+  const addExercise = (exerciseName) => {
+    const exercise = {
+      exerciseName,
+      sets: { [uuidv4()]: defaultSet },
+    };
+
+    dispatch({
+      type: "ADD_EXERCISE",
+      payload: { exerciseId: uuidv4(), exercise },
+    });
+  };
+
   return (
     <>
       <div className="bg-white p-4">
@@ -61,7 +78,7 @@ function PickExercise({ toggleModal, addExercise }) {
             {showCreateExercise ? (
               <CreateExercise
                 exerciseName={exerciseName}
-                handleChange={handleChange}
+                handleChangeName={handleChangeName}
                 error={error}
               />
             ) : (
@@ -92,23 +109,25 @@ function PickExercise({ toggleModal, addExercise }) {
 }
 
 function ExerciseList({ addExercise, toggleModal }) {
-  const { loading, exercises } = useExercises();
+  const { isFetchingExercises, exercises } = useWorkoutDb();
 
-  if (loading) return <Icon type="loading" />;
+  if (isFetchingExercises) return <Icon type="loading" />;
 
   return (
     <div className="flex flex-col space-y-2">
-      {exercises.map(({ exerciseName }) => (
-        <Button
-          key={exerciseName}
-          value={exerciseName}
-          variant="primary"
-          action={() => {
-            addExercise(exerciseName);
-            toggleModal();
-          }}
-        />
-      ))}
+      {exercises.length === 0
+        ? "Add your first exercise"
+        : exercises.map(({ exerciseName }) => (
+            <Button
+              key={exerciseName}
+              value={exerciseName}
+              variant="primary"
+              action={() => {
+                addExercise(exerciseName);
+                toggleModal();
+              }}
+            />
+          ))}
     </div>
   );
 }
@@ -128,16 +147,16 @@ function SelectExerciseFooter({ toggleShowCreateExercise, toggleModal }) {
   );
 }
 
-function CreateExercise({ exerciseName, handleChange, error }) {
+function CreateExercise({ exerciseName, handleChangeName, error }) {
   return (
-    <div>
+    <div className="space-y-4">
       <Input
-        name=""
+        name="name"
         type="text"
         label="Name"
         placeholder="Exercise name.."
         value={exerciseName}
-        handleChange={handleChange}
+        handleChange={handleChangeName}
       />
       {error && <div className="text-red-600 mt-2">{error}</div>}
     </div>
@@ -153,4 +172,4 @@ function CreateExerciseFooter({ toggleShowCreateExercise, saveExercise }) {
   );
 }
 
-export default PickExercise;
+export default SelectExercise;

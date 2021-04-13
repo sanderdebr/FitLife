@@ -11,7 +11,7 @@ function DashboardLayout({ children }) {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen min-h-screen h-full">
       <aside className="bg-white p-12 space-y-20 flex flex-col items-center">
         <Logo />
         <NavBar links={getActiveNavLink(navLinks, pathname)} />

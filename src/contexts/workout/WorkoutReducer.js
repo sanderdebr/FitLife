@@ -1,5 +1,5 @@
 import produce from "immer";
-import { defaultSet } from "../../constants";
+import { DEFAULT_SET } from "../../constants";
 import { persist } from "../../helpers";
 
 const ACTIONS = {
@@ -44,7 +44,7 @@ export const rootReducer = produce((draft, { type, payload }) => {
       draft.exercises[payload.exerciseId] = payload.exercise;
       break;
     case ACTIONS.ADD_SET:
-      draft.exercises[payload.exerciseId].sets[payload.setId] = defaultSet;
+      draft.exercises[payload.exerciseId].sets[payload.setId] = DEFAULT_SET;
       break;
     case ACTIONS.REMOVE_SET:
       delete draft.exercises[payload.exerciseId].sets[payload.setId];

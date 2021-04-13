@@ -1,6 +1,6 @@
 import React from "react";
 import { ImPause, ImPlay2 } from "react-icons/im";
-import { iconProps } from "../constants";
+import { ICON_PROPS } from "../constants";
 import { RiDashboard3Line, RiUser3Line } from "react-icons/ri";
 import { IoMdFitness, IoIosRemoveCircleOutline } from "react-icons/io";
 import {
@@ -27,7 +27,7 @@ function Icon({ type }) {
   return (
     <IconComponent
       className={type === "loading" && "animate-spin"}
-      {...iconProps}
+      {...ICON_PROPS}
     />
   );
 }

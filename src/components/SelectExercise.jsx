@@ -6,7 +6,7 @@ import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
 import { v4 as uuidv4 } from "uuid";
-import { defaultSet } from "../constants";
+import { DEFAULT_SET } from "../constants";
 import { useWorkoutDispatch } from "../contexts/workout/WorkoutContext";
 
 function SelectExercise({ toggleModal }) {
@@ -49,7 +49,7 @@ function SelectExercise({ toggleModal }) {
   const addExercise = (exerciseName) => {
     const exercise = {
       exerciseName,
-      sets: { [uuidv4()]: defaultSet },
+      sets: { [uuidv4()]: DEFAULT_SET },
     };
 
     dispatch({

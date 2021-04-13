@@ -1,33 +1,36 @@
-import { format, subMonths } from "date-fns";
+import { format, subDays } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import useWorkoutDb from "../hooks/useWorkoutDb";
+import { CALORIES_PER_HOUR } from "../constants";
 
-function WorkoutChart() {
+function CalorieChart() {
   const [data, setData] = useState([]);
 
   const { isFetchingWorkouts, workouts } = useWorkoutDb();
 
   useEffect(() => {
-    let lastMonths = [];
+    let lastDays = [];
 
-    const addEmptyMonths = () => {
+    const addEmptyDays = () => {
       const today = new Date();
 
-      for (let i = 2; i >= 0; i--) {
-        const month = format(subMonths(today, i), "LLL");
-        lastMonths.push(month);
-        setData((data) => [...data, { month, amount: 0 }]);
+      for (let i = 6; i >= 0; i--) {
+        const day = format(subDays(today, i), "E");
+        lastDays.push(day);
+        setData((data) => [...data, { day, calories: 0 }]);
       }
     };
 
-    const addWorkoutsPerMonth = () => {
-      for (const { createdAt } of workouts) {
-        const month = format(new Date(createdAt.seconds * 1000), "LLL");
-        const index = lastMonths.indexOf(month);
+    const addCaloriesPerDay = () => {
+      for (const { createdAt, secondsPassed } of workouts) {
+        const day = format(new Date(createdAt.seconds * 1000), "E");
+        const index = lastDays.indexOf(day);
         if (index !== -1) {
+          const calories = CALORIES_PER_HOUR * (secondsPassed / 3600);
+
           setData((data) => {
-            data[index].amount++;
+            data[index].calories = data[index].calories + parseInt(calories);
             return data;
           });
         }
@@ -35,15 +38,15 @@ function WorkoutChart() {
     };
 
     setData([]);
-    addEmptyMonths();
+    addEmptyDays();
 
     if (!isFetchingWorkouts && workouts.length) {
-      addWorkoutsPerMonth();
+      addCaloriesPerDay();
     }
   }, [isFetchingWorkouts, workouts]);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="99%" height={600}>
       <AreaChart data={data}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -52,7 +55,7 @@ function WorkoutChart() {
           </linearGradient>
         </defs>
         <XAxis
-          dataKey="month"
+          dataKey="day"
           axisLine={false}
           tickLine={false}
           tick={{ fill: "#FFB7E4", fontSize: 10 }}
@@ -62,7 +65,7 @@ function WorkoutChart() {
         <Tooltip />
         <Area
           type="monotone"
-          dataKey="amount"
+          dataKey="calories"
           stroke="#de8cbf"
           strokeWidth={3}
           fillOpacity={1}
@@ -73,8 +76,4 @@ function WorkoutChart() {
   );
 }
 
-const CustomizedLabel = (row) => {
-  console.log(row);
-};
-
-export default WorkoutChart;
+export default CalorieChart;

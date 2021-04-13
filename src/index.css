@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  ::selection {
+    @apply bg-secondary;
+  }
+
   a {
     @apply font-semibold;
   }

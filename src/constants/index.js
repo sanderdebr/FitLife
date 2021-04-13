@@ -1,14 +1,19 @@
 /*--------------------------
+  Calories burned per hour
+ --------------------------- */
+export const CALORIES_PER_HOUR = 500;
+
+/*--------------------------
   Icon properties
  --------------------------- */
-export const iconProps = {
+export const ICON_PROPS = {
   size: "20",
 };
 
 /*--------------------------
   Navbar links
  --------------------------- */
-export const navLinks = [
+export const NAV_LINKS = [
   {
     label: "Dashboard",
     to: "/",
@@ -29,7 +34,7 @@ export const navLinks = [
 /*--------------------------
   Default set 
  --------------------------- */
-export const defaultSet = {
+export const DEFAULT_SET = {
   weight: 45,
   reps: 0,
   isFinished: false,

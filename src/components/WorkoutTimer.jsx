@@ -63,6 +63,7 @@ function WorkoutTimer({ toggleModal }) {
     try {
       await database.workouts.add({
         workout: JSON.stringify(exercises),
+        secondsPassed,
         userId: user.uid,
         createdAt: database.getCurrentTimestamp(),
       });
@@ -103,7 +104,7 @@ function WorkoutTimer({ toggleModal }) {
       <div className="text-2xl">
         <span ref={minutesRef}>00</span>:<span ref={secondsRef}>00</span>
       </div>
-      <div className="">{message && message}</div>
+      <div className="text-primary font-semibold">{message && message}</div>
     </div>
   );
 }

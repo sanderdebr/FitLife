@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import { useAuth } from "../contexts/auth/AuthContext";
 
 function SignIn() {
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, resetPassword } = useAuth();
   const history = useHistory();
 
   const initialValues = { email: "", password: "" };
@@ -15,6 +15,7 @@ function SignIn() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,6 +53,27 @@ function SignIn() {
     setGoogleLoading(false);
   };
 
+  const handlePassword = async () => {
+    setMessage(null);
+    setError(null);
+
+    const { email } = values;
+
+    if (!email) {
+      return setError("Please enter an email first");
+    }
+
+    try {
+      setLoading(true);
+      await resetPassword(email);
+      setMessage("Successfully sent email reset link");
+    } catch (error) {
+      setError(error.message);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <main className="lg:max-w-xl lg:p-0 lg:space-y-14 p-6 w-full bg-white space-y-6">
       <h1 className="text-5xl">Sign In</h1>
@@ -64,14 +86,23 @@ function SignIn() {
           value={values.email}
           handleChange={handleChange}
         />
-        <Input
-          name="password"
-          type="password"
-          placeholder="Enter password.."
-          label="Password"
-          value={values.password}
-          handleChange={handleChange}
-        />
+        <div className="space-y-3">
+          <Input
+            name="password"
+            type="password"
+            placeholder="Enter password.."
+            label="Password"
+            value={values.password}
+            handleChange={handleChange}
+          />
+          <div
+            onClick={handlePassword}
+            className="flex justify-end text-sm text-primary cursor-pointer"
+          >
+            Forgot password?
+          </div>
+        </div>
+        {message && <div className="text-primary font-semibold">{message}</div>}
         {error && <div className="text-red-600">{error}</div>}
         <Button
           value="Sign In"

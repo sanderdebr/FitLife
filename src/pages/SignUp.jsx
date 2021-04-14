@@ -42,7 +42,7 @@ function SignUp() {
 
   return (
     <main className="lg:max-w-xl lg:p-0 lg:space-y-14 p-6 w-full bg-white space-y-6">
-      <h1>Sign Up</h1>
+      <h1 className="text-5xl">Sign Up</h1>
       <form className="space-y-6">
         <Input
           name="email"
@@ -62,6 +62,7 @@ function SignUp() {
         <Button
           value="Sign Up"
           type="submit"
+          variant="primary"
           action={handleSubmit}
           loading={loading}
           fullWidth

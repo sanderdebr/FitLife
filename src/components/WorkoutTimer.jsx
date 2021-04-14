@@ -11,6 +11,7 @@ import Button from "./Button";
 
 function WorkoutTimer({ toggleModal }) {
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const minutesRef = useRef();
   const secondsRef = useRef();
@@ -59,6 +60,7 @@ function WorkoutTimer({ toggleModal }) {
 
   const handleSave = async () => {
     newMessage("");
+    setLoading(true);
 
     try {
       await database.workouts.add({
@@ -73,6 +75,8 @@ function WorkoutTimer({ toggleModal }) {
     } catch (err) {
       newMessage(err.message);
     }
+
+    setLoading(false);
   };
 
   const finishedSets = Object.values(exercises).filter(
@@ -80,8 +84,6 @@ function WorkoutTimer({ toggleModal }) {
       Object.values(exercise.sets).filter((set) => set.isFinished === true)
         .length > 0
   );
-
-  console.log(finishedSets);
 
   const showSave = finishedSets.length > 0;
 
@@ -92,6 +94,7 @@ function WorkoutTimer({ toggleModal }) {
           showSave={showSave}
           handleSave={handleSave}
           handleDiscard={handleDiscard}
+          loading={loading}
           stopTimer={stopTimer}
           toggleModal={toggleModal}
           isPaused={isPaused}
@@ -113,6 +116,7 @@ function ActiveWorkoutTimer({
   showSave,
   handleSave,
   handleDiscard,
+  loading,
   toggleModal,
   isPaused,
   resumeTimer,
@@ -127,6 +131,7 @@ function ActiveWorkoutTimer({
           type="submit"
           variant="primary"
           action={handleSave}
+          loading={loading}
         />
       )}
 
@@ -160,6 +165,7 @@ function NotStartedWorkoutTimer({ handleStart }) {
         variant="frame"
         type="submit"
         action={null}
+        fullWidth
       />
     </>
   );

@@ -6,6 +6,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import SignInLayout from "./layouts/SignInLayout";
 import Dashboard from "./pages/Dashboard";
 import Workout from "./pages/Workout";
+import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
@@ -29,6 +30,12 @@ function Router() {
               privateRoute
               layout={DashboardLayout}
               page={Workout}
+            />
+            <RouteWrapper
+              path="/profile"
+              privateRoute
+              layout={DashboardLayout}
+              page={Profile}
             />
           </Switch>
         </WorkoutProvider>

@@ -46,7 +46,7 @@ function CalorieChart() {
   }, [isFetchingWorkouts, workouts]);
 
   return (
-    <ResponsiveContainer width="99%" height={600}>
+    <ResponsiveContainer width="99%" height={500}>
       <AreaChart data={data}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

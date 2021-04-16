@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import Logo from "../components/Logo";
 import NavBar from "../components/NavBar";
@@ -17,8 +17,12 @@ function DashboardLayout({ children }) {
     setShowMobileMenu((showMobileMenu) => !showMobileMenu);
   };
 
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [pathname]);
+
   return (
-    <div className="lg:flex w-screen min-h-screen h-full">
+    <div className="lg:flex w-screen min-h-screen h-full bg-gray-100">
       <aside
         id="desktop-menu"
         className="hidden lg:flex bg-white px-12 py-20 flex-col items-center justify-between"
@@ -34,7 +38,7 @@ function DashboardLayout({ children }) {
       {showMobileMenu && (
         <div
           id="mobile-menu lg:hidden"
-          className="fixed bg-white z-10 bg-opacity-90 w-screen h-screen flex-col items-center p-20 justify-center text-center space-y-20"
+          className="fixed bg-white z-10 w-screen h-screen flex-col items-center p-20 justify-center text-center space-y-20"
         >
           <NavBar links={getActiveNavLink(NAV_LINKS, pathname)} />
           <div className="text-primary cursor-pointer" onClick={signOut}>
@@ -42,7 +46,7 @@ function DashboardLayout({ children }) {
           </div>
         </div>
       )}
-      <div className="lg:hidden z-20 fixed bg-opacity-90 w-full px-5 py-2 bg-gray-100 flex items-center justify-between">
+      <div className="lg:hidden z-20 fixed w-full px-5 py-2 bg-white flex items-center justify-between">
         <Logo />
         <div>
           <Button
@@ -53,7 +57,7 @@ function DashboardLayout({ children }) {
           />
         </div>
       </div>
-      <section className="pt-20 bg-gray-100 w-full p-5 lg:p-20">
+      <section className="bg-gray-100 w-full flex items-start justify-start">
         {children}
       </section>
     </div>

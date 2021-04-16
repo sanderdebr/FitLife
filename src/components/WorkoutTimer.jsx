@@ -88,7 +88,7 @@ function WorkoutTimer({ toggleModal }) {
   const showSave = finishedSets.length > 0;
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-wrap items-center space-x-4">
       {workoutInProgress ? (
         <ActiveWorkoutTimer
           showSave={showSave}
@@ -165,7 +165,6 @@ function NotStartedWorkoutTimer({ handleStart }) {
         variant="frame"
         type="submit"
         action={null}
-        fullWidth
       />
     </>
   );

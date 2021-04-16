@@ -61,14 +61,14 @@ function Dashboard() {
   }, [isFetchingWorkouts, workouts]);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 w-full p-20">
       <div className="flex space-x-10 items-end">
         <h1 className="text-4xl">Dashboard</h1>
         <Link to="/workout">
           <Button value="New workout" variant="primary" type="text" />
         </Link>
       </div>
-      <main className="lg:flex lg:space-x-10 space-y-5">
+      <main className="lg:flex lg:space-x-10 space-y-5 lg:space-y-0">
         <section className="lg:w-72 bg-primary text-white rounded-xl">
           <div className="p-10 space-y-10">
             <h2 className="text-lg text-white">Workouts</h2>

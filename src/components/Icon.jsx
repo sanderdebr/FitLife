@@ -8,6 +8,7 @@ import {
   AiOutlineCheckCircle,
   AiOutlinePlusCircle,
 } from "react-icons/ai";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
 const icons = {
   loading: AiOutlineLoading3Quarters,
@@ -19,6 +20,7 @@ const icons = {
   user: RiUser3Line,
   remove: IoIosRemoveCircleOutline,
   plus: AiOutlinePlusCircle,
+  menu: HiOutlineMenuAlt3,
 };
 
 function Icon({ type }) {

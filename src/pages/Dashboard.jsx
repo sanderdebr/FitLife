@@ -68,8 +68,8 @@ function Dashboard() {
           <Button value="New workout" variant="primary" type="text" />
         </Link>
       </div>
-      <main className="flex space-x-10">
-        <section className="w-72 bg-primary text-white rounded-xl">
+      <main className="lg:flex lg:space-x-10 space-y-5">
+        <section className="lg:w-72 bg-primary text-white rounded-xl">
           <div className="p-10 space-y-10">
             <h2 className="text-lg text-white">Workouts</h2>
             <div className="space-y-1">
@@ -81,7 +81,7 @@ function Dashboard() {
           </div>
           <WorkoutChart />
         </section>
-        <section className="flex-grow bg-white rounded-xl flex">
+        <section className="flex-grow bg-white rounded-xl lg:flex">
           <div className="p-10 space-y-10">
             <h2 className="text-lg text-primary">Calories</h2>
             <div className="space-y-1">

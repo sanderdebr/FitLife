@@ -1,23 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router";
 import Logo from "../components/Logo";
 import NavBar from "../components/NavBar";
 import { NAV_LINKS } from "../constants";
 import { useAuth } from "../contexts/auth/AuthContext";
 import { getActiveNavLink } from "../helpers";
+import Button from "../components/Button";
 
 function DashboardLayout({ children }) {
   const { signOut } = useAuth();
   const { pathname } = useLocation();
 
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const handleMenu = () => {
+    setShowMobileMenu((showMobileMenu) => !showMobileMenu);
+  };
+
   return (
-    <div className="flex w-screen min-h-screen h-full">
-      <aside className="bg-white p-12 space-y-20 flex flex-col items-center">
-        <Logo />
-        <NavBar links={getActiveNavLink(NAV_LINKS, pathname)} />
-        <div onClick={signOut}>Sign Out</div>
+    <div className="lg:flex w-screen min-h-screen h-full">
+      <aside
+        id="desktop-menu"
+        className="hidden lg:flex bg-white px-12 py-20 flex-col items-center justify-between"
+      >
+        <div className="space-y-20 flex flex-col items-center">
+          <Logo />
+          <NavBar links={getActiveNavLink(NAV_LINKS, pathname)} />
+        </div>
+        <div className="text-primary cursor-pointer" onClick={signOut}>
+          Sign Out
+        </div>
       </aside>
-      <section className="bg-gray-100 w-full p-20">{children}</section>
+      {showMobileMenu && (
+        <div
+          id="mobile-menu lg:hidden"
+          className="fixed bg-white z-10 bg-opacity-90 w-screen h-screen flex-col items-center p-20 justify-center text-center space-y-20"
+        >
+          <NavBar links={getActiveNavLink(NAV_LINKS, pathname)} />
+          <div className="text-primary cursor-pointer" onClick={signOut}>
+            Sign Out
+          </div>
+        </div>
+      )}
+      <div className="lg:hidden z-20 fixed bg-opacity-90 w-full px-5 py-2 bg-gray-100 flex items-center justify-between">
+        <Logo />
+        <div>
+          <Button
+            value="Menu"
+            variant="secondary"
+            icon="menu"
+            action={handleMenu}
+          />
+        </div>
+      </div>
+      <section className="pt-20 bg-gray-100 w-full p-5 lg:p-20">
+        {children}
+      </section>
     </div>
   );
 }

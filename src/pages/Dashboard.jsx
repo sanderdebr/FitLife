@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import CalorieChart from "../components/CalorieChart";
 import WorkoutChart from "../components/WorkoutChart";
+import { CALORIES_PER_HOUR } from "../constants";
 import useWorkoutDb from "../hooks/useWorkoutDb";
 
 function Dashboard() {
@@ -32,7 +33,7 @@ function Dashboard() {
         const week = format(formattedDate, "w");
         const month = format(formattedDate, "L");
 
-        const newCalories = 500 * (secondsPassed / 3600);
+        const newCalories = CALORIES_PER_HOUR * (secondsPassed / 3600);
 
         if (dayOfYear === day) {
           setCalories((calories) => ({
@@ -61,7 +62,7 @@ function Dashboard() {
   }, [isFetchingWorkouts, workouts]);
 
   return (
-    <div className="space-y-10 w-full p-20">
+    <div className="space-y-10 w-full p-5 lg:p-20">
       <div className="flex space-x-10 items-end">
         <h1 className="text-4xl">Dashboard</h1>
         <Link to="/workout">

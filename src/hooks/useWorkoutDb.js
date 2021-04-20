@@ -47,7 +47,7 @@ function reducer(state, { type, payload }) {
 }
 
 function useWorkoutDb() {
-  const [workoutDbState, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const { user } = useAuth();
 
@@ -77,7 +77,7 @@ function useWorkoutDb() {
       });
   }, [user]);
 
-  return workoutDbState;
+  return { state, dispatch };
 }
 
 export default useWorkoutDb;

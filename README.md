@@ -1,4 +1,6 @@
-# FitLife: clean and simple Workout Tracker
+## FitLife
+<hr/>
+### Clean and simple Workout Tracker
 
 https://fitlife-app.netlify.app/
 

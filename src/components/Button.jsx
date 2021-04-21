@@ -25,6 +25,14 @@ function Button({
       variantClass =
         "bg-white text-primary border border-primary hover:bg-gray-100 focus:ring-primary";
       break;
+    case "green":
+      variantClass =
+        "bg-green-100 text-green-600 hover:bg-green-200 focus:ring-bg-green-200";
+      break;
+    case "red":
+      variantClass =
+        "bg-red-100 text-red-600 hover:bg-red-200 focus:ring-bg-green-200";
+      break;
     default:
       variantClass =
         "bg-gray-100 text-primary hover:bg-gray-300 focus:ring-gray-300";

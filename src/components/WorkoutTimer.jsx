@@ -88,7 +88,7 @@ function WorkoutTimer({ toggleModal }) {
   const showSave = finishedSets.length > 0;
 
   return (
-    <div className="flex flex-wrap items-center space-x-4">
+    <div className="flex flex-wrap items-center space-x-4 space-y-2">
       {workoutInProgress ? (
         <ActiveWorkoutTimer
           showSave={showSave}
@@ -102,12 +102,22 @@ function WorkoutTimer({ toggleModal }) {
           pauseTimer={pauseTimer}
         />
       ) : (
-        <NotStartedWorkoutTimer handleStart={handleStart} />
+        <Button
+          value="Start empty workout"
+          type="submit"
+          variant="primary"
+          action={handleStart}
+        />
       )}
       <div className="text-2xl">
         <span ref={minutesRef}>00</span>:<span ref={secondsRef}>00</span>
       </div>
       <div className="text-primary font-semibold">{message && message}</div>
+      {workoutInProgress && !showSave ? (
+        <div className="text-primary text-sm">
+          Complete at least one set to save this workout
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -146,25 +156,6 @@ function ActiveWorkoutTimer({
         action={isPaused ? resumeTimer : pauseTimer}
         icon={isPaused ? "play" : "pause"}
         variant="primary"
-      />
-    </>
-  );
-}
-
-function NotStartedWorkoutTimer({ handleStart }) {
-  return (
-    <>
-      <Button
-        value="Start empty workout"
-        type="submit"
-        variant="primary"
-        action={handleStart}
-      />
-      <Button
-        value="Pick a template"
-        variant="frame"
-        type="submit"
-        action={null}
       />
     </>
   );

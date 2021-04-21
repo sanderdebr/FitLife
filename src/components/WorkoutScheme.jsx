@@ -19,15 +19,16 @@ function WorkoutScheme() {
   return Object.entries(exercises).map(
     ([exerciseId, { exerciseName, sets }]) => (
       <section key={exerciseId}>
-        <div className="mb-6" key={exerciseId}>
+        <div key={exerciseId}>
           <div className="flex space-x-2 items-baseline">
             <h3 className="text-lg mb-4">{exerciseName}</h3>
             <Button
               icon="remove"
+              variant="red"
               action={() =>
                 dispatch({
                   type: "REMOVE_EXERCISE",
-                  payload: exerciseId,
+                  payload: { exerciseId },
                 })
               }
             />
@@ -86,8 +87,8 @@ function WorkoutScheme() {
                   </div>
                   <div className="w-34 flex items-center justify-center space-x-2">
                     <Button
-                      variant="secondary"
                       icon="remove"
+                      variant="red"
                       action={() =>
                         dispatch({
                           type: "REMOVE_SET",
@@ -101,7 +102,7 @@ function WorkoutScheme() {
 
                     <Button
                       icon="check"
-                      variant={isFinished ? "primary" : "secondary"}
+                      variant="green"
                       action={() =>
                         dispatch({
                           type: "TOGGLE_FINISHED",
@@ -116,20 +117,21 @@ function WorkoutScheme() {
                 </div>
               )
             )}
-          <Button
-            value="Add set"
-            variant="primary"
-            icon="plus"
-            action={() =>
-              dispatch({
-                type: "ADD_SET",
-                payload: {
-                  exerciseId,
-                  setId: uuidv4(),
-                },
-              })
-            }
-          />
+          <div className="mt-2">
+            <Button
+              value="Add set"
+              icon="plus"
+              action={() =>
+                dispatch({
+                  type: "ADD_SET",
+                  payload: {
+                    exerciseId,
+                    setId: uuidv4(),
+                  },
+                })
+              }
+            />
+          </div>
         </div>
       </section>
     )

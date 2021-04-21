@@ -13,7 +13,7 @@ function NavBar({ links }) {
                 isActive
                   ? "bg-primary text-white"
                   : "bg-white text-primary hover:bg-gray-100 hover:text-primary"
-              } font-regular px-12 py-3 font-normal rounded-full transition-all w-full flex items-center justify-start space-x-4`}
+              } font-regular px-12 py-3 font-normal rounded-full transition-all w-full flex items-center justify-center lg:justify-start space-x-4`}
             >
               {icon && <Icon type={icon} />}
               <div>{label}</div>

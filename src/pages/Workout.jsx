@@ -12,7 +12,7 @@ function Workout() {
   };
 
   return (
-    <div className="lg:p-20">
+    <>
       {showModal && (
         <Modal>
           <SelectExercise toggleModal={toggleModal} />
@@ -29,7 +29,7 @@ function Workout() {
           </section>
         </main>
       </div>
-    </div>
+    </>
   );
 }
 

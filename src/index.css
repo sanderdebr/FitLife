@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply overflow-x-hidden;
+  }
+
   ::selection {
     @apply bg-secondary;
   }
@@ -30,4 +34,10 @@
   button {
     @apply rounded;
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

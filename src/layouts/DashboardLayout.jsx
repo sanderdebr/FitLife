@@ -25,7 +25,7 @@ function DashboardLayout({ children }) {
     <div className="lg:flex w-screen min-h-screen h-full bg-gray-100">
       <aside
         id="desktop-menu"
-        className="hidden lg:flex bg-white px-12 py-20 flex-col items-center justify-between"
+        className="hidden lg:flex bg-white px-4 2xl:px-12 py-20 flex-col items-center justify-between"
       >
         <div className="space-y-20 flex flex-col items-center">
           <Logo />
@@ -57,7 +57,7 @@ function DashboardLayout({ children }) {
           />
         </div>
       </div>
-      <section className="bg-gray-100 w-full flex items-start justify-start">
+      <section className="bg-gray-100 w-full px-5 lg:px-20 py-10 pt-24 lg:pt-10 flex items-start justify-start">
         {children}
       </section>
     </div>

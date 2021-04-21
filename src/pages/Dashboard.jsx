@@ -62,7 +62,7 @@ function Dashboard() {
   }, [isFetchingWorkouts, workouts]);
 
   return (
-    <div className="space-y-10 w-full p-5 lg:p-20">
+    <div className="space-y-10 w-full">
       <div className="flex space-x-10 items-end">
         <h1 className="text-4xl">Dashboard</h1>
         <Link to="/workout">

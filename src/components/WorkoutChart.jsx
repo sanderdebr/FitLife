@@ -73,8 +73,4 @@ function WorkoutChart() {
   );
 }
 
-const CustomizedLabel = (row) => {
-  console.log(row);
-};
-
 export default WorkoutChart;

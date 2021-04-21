@@ -13,7 +13,9 @@ function Input({
     <div className="flex flex-col space-y-3">
       {label && <label htmlFor={name}>{label}</label>}
       <input
-        className={`${center && "text-center"} border border-gray p-3`}
+        className={`${
+          center && "text-center"
+        } border border-gray p-3 appearance-none`}
         id={name}
         name={name}
         type={type}

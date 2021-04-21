@@ -34,8 +34,8 @@ function WorkoutScheme() {
           </div>
           <div className="flex space-x-4 mb-2">
             <div className="w-12">Set</div>
-            <div className="w-32">Kg</div>
-            <div className="w-32">Reps</div>
+            <div className="w-12 lg:w-32">Kg</div>
+            <div className="w-12 lg:w-32">Reps</div>
             <div className="w-34"></div>
           </div>
           {Object.values(sets).length &&
@@ -50,9 +50,10 @@ function WorkoutScheme() {
                   <div className="w-12 flex items-center justify-center">
                     nr
                   </div>
-                  <div className="w-32">
+                  <div className="w-12 lg:w-32">
                     <Input
                       center
+                      type="number"
                       value={weight}
                       handleChange={(e) =>
                         dispatch({
@@ -66,9 +67,10 @@ function WorkoutScheme() {
                       }
                     />
                   </div>
-                  <div className="w-32">
+                  <div className="w-12 lg:w-32">
                     <Input
                       center
+                      type="number"
                       value={reps}
                       handleChange={(e) =>
                         dispatch({

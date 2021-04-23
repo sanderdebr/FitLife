@@ -34,11 +34,11 @@ export const rootReducer = produce((draft, { type, payload }) => {
       break;
     case ACTIONS.UPDATE_WEIGHT:
       draft.exercises[payload.exerciseId].sets[payload.setId].weight =
-        payload.weight;
+        payload.newWeight;
       break;
     case ACTIONS.UPDATE_REPS:
       draft.exercises[payload.exerciseId].sets[payload.setId].reps =
-        payload.reps;
+        payload.newReps;
       break;
     case ACTIONS.ADD_EXERCISE:
       draft.exercises[payload.exerciseId] = payload.exercise;

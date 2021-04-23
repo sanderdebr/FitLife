@@ -88,7 +88,7 @@ function WorkoutTimer({ toggleModal }) {
   const showSave = finishedSets.length > 0;
 
   return (
-    <div className="flex flex-wrap items-center space-x-4 space-y-2">
+    <div className="flex flex-wrap items-center space-x-4">
       {workoutInProgress ? (
         <ActiveWorkoutTimer
           showSave={showSave}
@@ -114,7 +114,7 @@ function WorkoutTimer({ toggleModal }) {
       </div>
       <div className="text-primary font-semibold">{message && message}</div>
       {workoutInProgress && !showSave ? (
-        <div className="text-primary text-sm">
+        <div className="text-primary text-sm pt-4 lg:pt-0">
           Complete at least one set to save this workout
         </div>
       ) : null}
@@ -134,7 +134,12 @@ function ActiveWorkoutTimer({
 }) {
   return (
     <>
-      <Button value="Discard workout" type="submit" action={handleDiscard} />
+      <Button
+        value="Discard workout"
+        variant="red"
+        type="submit"
+        action={handleDiscard}
+      />
       {showSave && (
         <Button
           value="Save workout"
